@@ -1,12 +1,15 @@
 #pragma once
-#include <SDL.h>
 #include <iostream>
+#include "player.hpp"
 
-class Game {
+#ifndef GAME_HPP_INCLUDED
+#define GAME_HPP_INCLUDED
+
+class game {
 
 public:
-	Game();
-	~Game();
+	game();
+	~game();
 
 	void init(const char* title, int width, int height, bool fullscreen);
 
@@ -24,4 +27,7 @@ private:
 
 	bool isRunning;
 	SDL_Window* window;
+	player* gamePlayer;
 };
+
+#endif

@@ -1,18 +1,20 @@
-#include "Game.hpp"
+#include "game.hpp"
 
-SDL_Renderer* Game::renderer = nullptr;
-SDL_Event Game::event;
+SDL_Renderer* game::renderer = nullptr;
+SDL_Event game::event;
 
-Game::Game(){
+game::game():
+    gamePlayer(new player(32, 32, 1))
+{
     isRunning = false;
     window = nullptr;
 }
 
-Game::~Game(){
+game::~game(){
 
 }
 
-void Game::init(const char* title, int width, int height, bool fullscreen){
+void game::init(const char* title, int width, int height, bool fullscreen){
 
     int flags = 0;
     if (fullscreen) {
@@ -32,9 +34,10 @@ void Game::init(const char* title, int width, int height, bool fullscreen){
         isRunning = false;
     }
 
+    gamePlayer->setTexture(texManager::LoadTexture("Character.bmp", renderer));
 }
 
-void Game::handleEvents(){
+void game::handleEvents(){
     SDL_PollEvent(&event);
 
     switch (event.type)
@@ -47,19 +50,25 @@ void Game::handleEvents(){
     }
 }
 
-void Game::updateEvents(){
+void game::updateEvents(){
     //handle input and update objects
 
 }
 
-void Game::render(){
+void game::render(){
 	SDL_RenderClear(renderer);
     // render
+    
+    gamePlayer->render();
+    SDL_RenderCopy(renderer, gamePlayer->getTexture(), NULL, NULL);
+
+    if (gamePlayer->getTexture() == NULL)
+        std::cout << "NULL" << std::endl;
 
 	SDL_RenderPresent(renderer);
 }
 
-void Game::clean(){
+void game::clean(){
 
     SDL_DestroyWindow(window);
     SDL_DestroyRenderer(renderer);

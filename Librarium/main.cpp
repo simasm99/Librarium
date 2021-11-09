@@ -1,19 +1,18 @@
-#include "Game.hpp"
+#include "game.hpp"
 #include <iostream>
 
-Game* game = nullptr;
+game* gameIni = nullptr;
 
 int main(int argc, char* argv[])
 {
-    game = new Game();
-    game->init("Librarium", 800, 640, false);
+	gameIni = new game();
+	gameIni->init("Librarium", 800, 640, false);
 
-	while (game->running())
+	while (gameIni->running())
 	{
-
-		game->handleEvents();
-		game->updateEvents();
-		game->render();
+		gameIni->handleEvents();
+		gameIni->updateEvents();
+		gameIni->render();
 
 	}
 
