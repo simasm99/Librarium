@@ -11,10 +11,16 @@ public:
 	player(int xpos, int ypos, int type);
 	~player();
 
+	void handleKeyboard(SDL_Event& e);
 	void movePlayer();
 	void update();
 	void render();
 
+private:
+	int mVelX;
+	int mVelY;
+
+	const int PLAYER_VEL = 10;
 };
 
 

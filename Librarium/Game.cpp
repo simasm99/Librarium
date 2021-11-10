@@ -1,7 +1,6 @@
 #include "game.hpp"
 
 SDL_Renderer* game::renderer = nullptr;
-SDL_Event game::event;
 
 game::game():
     gamePlayer(new player(32, 32, 1))
@@ -38,20 +37,22 @@ void game::init(const char* title, int width, int height, bool fullscreen){
 }
 
 void game::handleEvents(){
-    SDL_PollEvent(&event);
 
-    switch (event.type)
+    SDL_Event e;
+
+    while (SDL_PollEvent(&e) != 0)
     {
-    case SDL_QUIT:
-        isRunning = false;
-        break;
-    default:
-        break;
+        if (e.type == SDL_QUIT)
+        {
+            isRunning = false;
+        }
+        gamePlayer->handleKeyboard(e);
     }
 }
 
 void game::updateEvents(){
     //handle input and update objects
+    gamePlayer->movePlayer();
 
 }
 
@@ -60,11 +61,8 @@ void game::render(){
     // render
     
     gamePlayer->render();
-    SDL_RenderCopy(renderer, gamePlayer->getTexture(), NULL, NULL);
 
-    if (gamePlayer->getTexture() == NULL)
-        std::cout << "NULL" << std::endl;
-
+    
 	SDL_RenderPresent(renderer);
 }
 
