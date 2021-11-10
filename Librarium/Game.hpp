@@ -1,6 +1,7 @@
 #pragma once
 #include <iostream>
 #include "player.hpp"
+#include "map.hpp"
 
 #ifndef GAME_HPP_INCLUDED
 #define GAME_HPP_INCLUDED
@@ -26,7 +27,9 @@ private:
 
 	bool isRunning;
 	SDL_Window* window;
+
 	player* gamePlayer;
+	map* gameMap;
 };
 
 #endif

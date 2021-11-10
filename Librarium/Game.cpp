@@ -3,7 +3,8 @@
 SDL_Renderer* game::renderer = nullptr;
 
 game::game():
-    gamePlayer(new player(32, 32, 1))
+    gamePlayer(new player(32, 32, 1)),
+    gameMap(new map(48, 32))
 {
     isRunning = false;
     window = nullptr;
@@ -22,18 +23,27 @@ void game::init(const char* title, int width, int height, bool fullscreen){
     if (SDL_Init(SDL_INIT_EVERYTHING) == 0){
         window = SDL_CreateWindow(title, SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, width, height, flags);
         renderer = SDL_CreateRenderer(window, -1, flags);
+
         if (renderer)
         {
             SDL_SetRenderDrawColor(renderer, 255, 255, 255, 255);
-        }
 
-        isRunning = true;
+            if (!(IMG_Init(IMG_INIT_PNG) & IMG_INIT_PNG))
+            {
+                std::cout << "Image.h does not work" << std::endl;
+                isRunning = false;
+            }
+            else {
+                isRunning = true;
+            }
+        }
     }else{
         std::cout << "Failed to create window or inicialize SDL2\n";
         isRunning = false;
     }
 
-    gamePlayer->setTexture(texManager::LoadTexture("Character.bmp", renderer));
+    gamePlayer->setTexture(texManager::LoadTexture("../Librarium/Textures/Character.bmp", renderer));
+    gameMap->loadTilesTexture("../Librarium/Textures/floorTile.bmp", renderer);
 }
 
 void game::handleEvents(){
@@ -60,8 +70,8 @@ void game::render(){
 	SDL_RenderClear(renderer);
     // render
     
+    gameMap->render(renderer);
     gamePlayer->render();
-
     
 	SDL_RenderPresent(renderer);
 }
