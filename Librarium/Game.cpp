@@ -8,6 +8,7 @@ game::game():
 {
     isRunning = false;
     window = nullptr;
+    camera = { 0, 0, 800, 640 };
 }
 
 game::~game(){
@@ -43,7 +44,10 @@ void game::init(const char* title, int width, int height, bool fullscreen){
     }
 
     gamePlayer->setTexture(texManager::LoadTexture("../Librarium/Textures/Character.bmp", renderer));
+    gameMap->loadMap();
     gameMap->loadTilesTexture("../Librarium/Textures/floorTile.bmp", renderer);
+    gameMap->loadTilesTexture("../Librarium/Textures/floorTile1.bmp", renderer);
+    gameMap->loadTilesTexture("../Librarium/Textures/floorTile2.bmp", renderer);
 }
 
 void game::handleEvents(){
@@ -63,6 +67,8 @@ void game::handleEvents(){
 void game::updateEvents(){
     //handle input and update objects
     gamePlayer->movePlayer();
+    gamePlayer->setCamera(camera);
+    std::cout << "Player x: " << gamePlayer->getCollisionBox().x << "Player y: " << gamePlayer->getCollisionBox().y << std::endl;
 
 }
 
@@ -70,8 +76,8 @@ void game::render(){
 	SDL_RenderClear(renderer);
     // render
     
-    gameMap->render(renderer);
-    gamePlayer->render();
+    gameMap->render(renderer, camera);
+    gamePlayer->render(camera);
     
 	SDL_RenderPresent(renderer);
 }

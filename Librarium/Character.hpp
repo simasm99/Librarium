@@ -11,7 +11,7 @@ public:
 	virtual ~character();
 
 	virtual void update() = 0;
-	virtual void render() = 0;
+	virtual void render(SDL_Rect camera) = 0;
 
     SDL_Rect getCollisionBox() const;
     void setCollisionBox(SDL_Rect rect) const;

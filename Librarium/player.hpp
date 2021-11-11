@@ -14,7 +14,9 @@ public:
 	void handleKeyboard(SDL_Event& e);
 	void movePlayer();
 	void update();
-	void render();
+	void render(SDL_Rect camera);
+
+	void setCamera(SDL_Rect& camera);
 
 private:
 	int mVelX;
