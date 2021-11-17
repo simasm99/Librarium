@@ -3,8 +3,6 @@
 
 class tileFloor : public tile {
 public:
-	tileFloor(int width, int height, int tileType, bool isSolid);
+	tileFloor(int x, int y, int w, int h);
 	~tileFloor();
-
-	//void updateTiles(double dt) override;
 };

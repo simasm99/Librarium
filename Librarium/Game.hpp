@@ -2,14 +2,15 @@
 #include <iostream>
 #include "player.hpp"
 #include "map.hpp"
+#include "invisibleWallEntity.hpp"
 
 #ifndef GAME_HPP_INCLUDED
 #define GAME_HPP_INCLUDED
 
 const int SCREEN_HEIGHT = 640;
 const int SCREEN_WIDTH = 800;
-const int LEVEL_WIDTH = 3072;
-const int LEVEL_HEIGHT = 2048;
+const int LEVEL_WIDTH = 1024;
+const int LEVEL_HEIGHT = 1024;
 
 class game {
 
@@ -36,6 +37,7 @@ private:
 
 	player* gamePlayer;
 	map* gameMap;
+	std::vector<entity*> entities;
 };
 
 #endif

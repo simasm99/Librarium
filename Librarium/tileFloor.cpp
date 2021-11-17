@@ -1,16 +1,11 @@
 #include "tileFloor.hpp"
 
-tileFloor::tileFloor(int width, int height, int tileType, bool isSolid) {
-	mBox = { 0, 0, height, width };
+tileFloor::tileFloor(int x, int y, int w, int h) {
+	mBox = { x, y, w, h };
 
-	mType = tileType;
-	solidBlock = isSolid;
 }
 tileFloor::~tileFloor() {
 
 }
 
-//void tileFloor::updateTiles(double dt){
-
-//}
 

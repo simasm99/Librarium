@@ -9,7 +9,8 @@
 class texManager {
 
 public:
-	static SDL_Texture* LoadTexture(const char* filename, SDL_Renderer* rend);
+	static SDL_Texture* LoadTextureBMP(const char* filename, SDL_Renderer* rend);
+	static SDL_Texture* LoadTextureIMG(const char* filename, SDL_Renderer* rend);
 };
 
 #endif

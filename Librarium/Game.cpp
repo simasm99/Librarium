@@ -3,8 +3,8 @@
 SDL_Renderer* game::renderer = nullptr;
 
 game::game():
-    gamePlayer(new player(32, 32, 1)),
-    gameMap(new map(48, 32))
+    gamePlayer(new player(512, 960, 1)),
+    gameMap(new map(16, 16))
 {
     isRunning = false;
     window = nullptr;
@@ -43,11 +43,29 @@ void game::init(const char* title, int width, int height, bool fullscreen){
         isRunning = false;
     }
 
-    gamePlayer->setTexture(texManager::LoadTexture("../Librarium/Textures/Character.bmp", renderer));
+    gamePlayer->setTexture(texManager::LoadTextureIMG("../Librarium/Textures/Character.png", renderer));
     gameMap->loadMap();
-    gameMap->loadTilesTexture("../Librarium/Textures/floorTile.bmp", renderer);
-    gameMap->loadTilesTexture("../Librarium/Textures/floorTile1.bmp", renderer);
-    gameMap->loadTilesTexture("../Librarium/Textures/floorTile2.bmp", renderer);
+    gameMap->loadTileTexture("../Librarium/Textures/floorTile.bmp", renderer, 64, 64);
+    gameMap->loadTileTexture("../Librarium/Textures/sideWall.bmp", renderer, 64, 64);
+    gameMap->loadTileTexture("../Librarium/Textures/sideWall2.bmp", renderer, 64, 64);
+    gameMap->loadTileTexture("../Librarium/Textures/sideWall3.bmp", renderer, 64, 64);
+    gameMap->loadTileTexture("../Librarium/Textures/sideWall4.bmp", renderer, 64, 64);
+    gameMap->loadTileTexture("../Librarium/Textures/sideWallCorner.bmp", renderer, 64, 64);
+    gameMap->loadTileTexture("../Librarium/Textures/sideWallCorner2.bmp", renderer, 64, 64);
+    gameMap->loadTileTexture("../Librarium/Textures/sideWallCorner3.bmp", renderer, 64, 64);
+    gameMap->loadTileTexture("../Librarium/Textures/sideWallCorner4.bmp", renderer, 64, 64);
+    gameMap->loadTileTexture("../Librarium/Textures/sideWallBoth.bmp", renderer, 64, 64);
+    gameMap->loadTileTexture("../Librarium/Textures/sideWallBoth1.bmp", renderer, 64, 64);
+    gameMap->loadTileTexture("../Librarium/Textures/black.bmp", renderer, 64, 64);
+
+    
+    entities.push_back(new invisibleWallEntity({ 320, 640, 64, 384 }, true));
+    entities.push_back(new invisibleWallEntity({ 128, 640, 192, 64 }, true));
+    entities.push_back(new invisibleWallEntity({ 64, 128, 64, 512 }, true));
+    entities.push_back(new invisibleWallEntity({ 64, 64, 864, 64 }, true));
+    entities.push_back(new invisibleWallEntity({ 896, 64, 64, 576 }, true));
+    entities.push_back(new invisibleWallEntity({ 704, 640, 192, 64 }, true));
+    entities.push_back(new invisibleWallEntity({ 640, 640, 64, 384 }, true));
 }
 
 void game::handleEvents(){
@@ -66,7 +84,7 @@ void game::handleEvents(){
 
 void game::updateEvents(){
     //handle input and update objects
-    gamePlayer->movePlayer();
+    gamePlayer->movePlayer(entities);
     gamePlayer->setCamera(camera);
     std::cout << "Player x: " << gamePlayer->getCollisionBox().x << "Player y: " << gamePlayer->getCollisionBox().y << std::endl;
 
@@ -77,8 +95,7 @@ void game::render(){
     // render
     
     gameMap->render(renderer, camera);
-    gamePlayer->render(camera);
-    
+    gamePlayer->render(camera);    
 	SDL_RenderPresent(renderer);
 }
 

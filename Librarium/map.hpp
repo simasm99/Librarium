@@ -13,7 +13,7 @@ public:
 	void render(SDL_Renderer* rend, SDL_Rect camera);
 
 	void loadMap();
-	void loadTilesTexture(const char* filename, SDL_Renderer* rend);
+	void loadTileTexture(const char* filename, SDL_Renderer* rend, int h, int w);
 
 private:
 	int xTiles, yTiles;
